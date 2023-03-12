@@ -1,56 +1,46 @@
 $(document).ready(function() {
 
-// When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history
-
 // Defining all the global scope variables that will be referenced later on:
 var searchInput = $("#search-input");
 var searchBtn = $("#search-button");
 var todayEl = $("#today");
 var forecastEl = $("#forecast");
 var apiKey = "b3383d2942e9787a370436f1cb6eb8a4";
-var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey; 
- // we have to capture the value of whatever the input city of the form is
-// using trim() to get rid of any white space
-var city = searchInput.val().trim();
-// create the search history element
 var searchHistory = $("<div>").attr("id", "search-history");
-// append the search history element to the DOM
 $("body").append(searchHistory);
 
 
-// making a button to contain the searches with JavaScript
-function generateBtn() {
- var storeBtn = JSON.parse(localStorage.getItem("button")) || [];
-    storeBtn.push(city);
-    localStorage.setItem("button", JSON.stringify(storeBtn));
-
-    // create a button with the city name as its text
-    var savedBtn = $("<button>");
-    savedBtn.addClass("btn btn-outline-success");
-    savedBtn.text(city);
-    // append the button to the search history section
-    searchHistory.append(savedBtn);
-
-  }
-  
-// append the saved button to the search history element
-
-
-
-
-// Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
-$(searchBtn).on("click", function(event){
+ // Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
+ $(searchBtn).on("click", function(event){
   // event.preventDefault since it's a button in a form
   event.preventDefault();
   todayEl.empty();
   forecastEl.empty();
 
-  // call generateBtn function here
+  // capturing the value of the input city of the form using trim() to get rid of any white space
+  var city = searchInput.val().trim();
+  // calling the generateBtn function to create a button based on the user input
   generateBtn(city);
+  // make an API call to get the city co-ordinates and display the current and future weather
+  displayWeather(city, apiKey);
 });
 
 
+// make a function to generate a button based on the user input and store it in the local storage
+function generateBtn(city) {
+  var storeBtn = JSON.parse(localStorage.getItem("button")) || [];
+  storeBtn.push(city);
+  localStorage.setItem("button", JSON.stringify(storeBtn));
 
+  // create a button with the city name as its text
+  var savedBtn = $("<button>");
+  savedBtn.addClass("btn btn-outline-success");
+  savedBtn.text(city);
+  // append the button to the search history section
+  searchHistory.append(savedBtn);
+}
+
+ 
 
 
 
