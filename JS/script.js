@@ -107,63 +107,13 @@ function getCurrentWeather(responses) {
 }
 
 // --------------------------- //
-function getFutureWeather(city) {
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
-
-  $.ajax({
-    url: url,
-    method: "GET",
-    dataType: "json",
-    success: function(data) {
-      console.log(data);
-
-      // Clear any previous data
-      futureWeatherEl.empty();
-
-      // Add city name
-      $("<h2>").text(data.city.name).appendTo(futureWeatherEl);
-
-      // Create a new row for each forecast
-      data.list.forEach(function(weather) {
-        const date = moment(weather.dt_txt).format("MMMM Do YYYY, h:mm:ss a");
-        const temp = weather.main.temp;
-        const humidity = weather.main.humidity;
-
-        const forecastEl = $("<div>").addClass("col-md-4");
-        const cardEl = $("<div>").addClass("card");
-        const cardBodyEl = $("<div>").addClass("card-body");
-
-        $("<h5>").text(date).appendTo(cardBodyEl);
-        $("<p>").text(`Temperature: ${temp}°C`).appendTo(cardBodyEl);
-        $("<p>").text(`Humidity: ${humidity}%`).appendTo(cardBodyEl);
-
-        cardEl.append(cardBodyEl);
-        forecastEl.append(cardEl);
-        futureWeatherEl.append(forecastEl);
-      });
-    })
-  }
+// function getFutureWeather
+// Instead of making another ajax call and repeating myself just to get the future weather, I should make a for loop that goes over it 5 times for 5 days. 
 })
 
-// ------------------------------------------- //
-// What to do next:
+                            
 
-// 5th function: the purpose of this is to get the data for all 5 days to show up - it's a repeat of the 3rd function.
-// I need 5 days worth of cards to represent the weather for those days
-// use JS to build a card, then create a for loop to generate 5 of them in total
-//youtube how to append and make html elements in Javascript
 
-// create a function called 'saveCity'. the point of this is to send something to localstorage and do an array of 'city' content that's been saved
-// push var city to a global cities array and then do JSON stringify to local storage.
-// within the first function make an automatic call to the save function
-
-// load function 
-
-// json parse local storage, load local storage call at the bottom of the page.
-// now, create an if statement. also make a variable that equals the json parse
-
-// final function: make a btn function. append javascript, create a html el and do a forloop to go through 5 cities. get the cities array,
-// then use a forloop to go through all 5 citirs, then for each city, create a button and set its value to the city name.                                                                                                      
 
 
 
