@@ -8,7 +8,8 @@ $(document).ready(function() {
   var apiKey = "b3383d2942e9787a370436f1cb6eb8a4";
   var searchHistory = $("<div>").attr("id", "search-history");
   $("body").append(searchHistory);
-  
+  $("#today").attr("style", "border:0.5px solid black; padding-left:10px")
+
   // Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
    $(searchBtn).on("click", function(event){
     // event.preventDefault since it's a button in a form
@@ -144,5 +145,7 @@ forecastEl.append(rowEl);
 
 // json parse local storage, load local storage call at the bottom of the page.
 // now, create an if statement. also make a variable that equals the json parse
+
+// the 5 day forecast isn't showing all 5 days - so fix that.
 
 // make aesthetic changes. E.g: the buttons display at the bottom of the page rather than up, and the forecast dashboard isn't outlined with a border. 
