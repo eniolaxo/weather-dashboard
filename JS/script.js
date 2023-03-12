@@ -106,9 +106,47 @@ function getCurrentWeather(responses) {
   todayEl.append(cityEl, iconEl, tempEl, humidEl, windEl);
 }
 
+// --------------------------- //
+function getFutureWeather(city) {
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
+  $.ajax({
+    url: url,
+    method: "GET",
+    dataType: "json",
+    success: function(data) {
+      console.log(data);
 
+      // Clear any previous data
+      futureWeatherEl.empty();
 
+      // Add city name
+      $("<h2>").text(data.city.name).appendTo(futureWeatherEl);
+
+      // Create a new row for each forecast
+      data.list.forEach(function(weather) {
+        const date = moment(weather.dt_txt).format("MMMM Do YYYY, h:mm:ss a");
+        const temp = weather.main.temp;
+        const humidity = weather.main.humidity;
+
+        const forecastEl = $("<div>").addClass("col-md-4");
+        const cardEl = $("<div>").addClass("card");
+        const cardBodyEl = $("<div>").addClass("card-body");
+
+        $("<h5>").text(date).appendTo(cardBodyEl);
+        $("<p>").text(`Temperature: ${temp}°C`).appendTo(cardBodyEl);
+        $("<p>").text(`Humidity: ${humidity}%`).appendTo(cardBodyEl);
+
+        cardEl.append(cardBodyEl);
+        forecastEl.append(cardEl);
+        futureWeatherEl.append(forecastEl);
+      });
+    })
+  }
+})
+
+// ------------------------------------------- //
+// What to do next:
 
 // 5th function: the purpose of this is to get the data for all 5 days to show up - it's a repeat of the 3rd function.
 // I need 5 days worth of cards to represent the weather for those days
@@ -127,10 +165,5 @@ function getCurrentWeather(responses) {
 // final function: make a btn function. append javascript, create a html el and do a forloop to go through 5 cities. get the cities array,
 // then use a forloop to go through all 5 citirs, then for each city, create a button and set its value to the city name.                                                                                                      
 
-// When a user clicks 'search' it should display the weather forecast
-// Firstly, I should do a click event on the button.
 
-
-
-})
 
