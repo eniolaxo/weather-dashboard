@@ -41,6 +41,8 @@ function generateBtn(city) {
 }
 
  //----------------------------------------------//
+// API Calls
+
  // make a function to display the current and future weather for a given city
  function displayWeather(city, apiKey) {
   var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
@@ -72,13 +74,10 @@ function generateBtn(city) {
   });
 }
 // --------------------------------------------- //
+// Functions
 
+// What I need:
 
-
-
-
-// third function that'll show the current weather on the dashboard
-// what I need:
 // city name
 // The date
 // An icon representation of weather conditions
@@ -87,10 +86,29 @@ function generateBtn(city) {
 // The humidity
 // The wind speed
 
+function getCurrentWeather(responses) {
+  // Extracting data from the JSON object returned from the API
+  var cityName = responses.name;
+  var date = moment().format("DD/MM/YYYY");
+  var iconCode = responses.weather[0].icon;
+  var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+  var temperature = "Temp: " + (responses.main.temp - 273.15).toFixed(1) + "°C";
+  var humidity = "Humidity: " + responses.main.humidity + "%";
 
 
-// I need to ajax fetch the URL to get the data 
-//after I get the data I can make a call to the 5th function
+  // Creating and appending the elements to display the data
+  var cityEl = $("<h3>").text(cityName + " (" + date + ")");
+  var iconEl = $("<img>").attr("src", iconUrl);
+  var tempEl = $("<p>").addClass("card-text").text(temperature);
+  var humidEl = $("<p>").addClass("card-text").text(humidity);
+  var windEl = $("<p>").addClass("card-text").text("Wind speed: " + responses.wind.speed + " kph");
+
+  todayEl.append(cityEl, iconEl, tempEl, humidEl, windEl);
+}
+
+
+
+
 
 // 5th function: the purpose of this is to get the data for all 5 days to show up - it's a repeat of the 3rd function.
 // I need 5 days worth of cards to represent the weather for those days
