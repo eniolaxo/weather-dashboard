@@ -40,42 +40,40 @@ function generateBtn(city) {
   searchHistory.append(savedBtn);
 }
 
- 
-
-
-
-
-
-
-
-
-
-  
-// Make an API call to get the city co-ords
-$.ajax({
-  url: apiUrl,
-  method: "GET",
-}).then(function(response) {
-  lat = response[0].lat;
-  lon = response[0].lon;
-
-  // API calls for co-ords to get the present weather
+ //----------------------------------------------//
+ // make a function to display the current and future weather for a given city
+ function displayWeather(city, apiKey) {
+  var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
+  // make an API call to get the city co-ords
   $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey,
+    url: apiUrl,
     method: "GET",
-  }).then(function(response1) {
-    getCurrentWeather(response1); // I'll need to make a getCurrentWeather function later on
+  }).then(function(response) {
+    var lat = response[0].lat;
+    var lon = response[0].lon;
 
-// call for 5 days worth:
-$.ajax({
-  url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey,
-  method: "GET"
-}).then(function(fiveDaysWorth) {
-  getCurrentWeather(fiveDaysWorth); // I'll need to make a getCurrentWeather function later on
-})
-})
-})
-})
+    // API calls for co-ords to get the present weather
+    $.ajax({
+      url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey,
+      method: "GET",
+    }).then(function(response1) {
+      // call the function to display the current weather
+      getCurrentWeather(response1);
+    });
+
+    // API calls for co-ords to get the future weather
+    $.ajax({
+      url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey,
+      method: "GET",
+    }).then(function(response2) {
+      // call the function to display the future weather
+      getFutureWeather(response2);
+    });
+  });
+}
+// --------------------------------------------- //
+
+
 
 
 
