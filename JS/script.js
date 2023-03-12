@@ -1,45 +1,58 @@
 $(document).ready(function() {
 
-// When a user searches for a city they are presented with current and future conditions for that city
-// and that city is added to the search history
+// When a user searches for a city they are presented with current and future conditions for that city and that city is added to the search history
 
 // Defining all the global scope variables that will be referenced later on:
 var searchInput = $("#search-input");
 var searchBtn = $("#search-button");
 var todayEl = $("#today");
 var forecastEl = $("#forecast");
-var storeBtn = [];
-var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q="; 
+var storeBtn = []; 
 var apiKey = "b3383d2942e9787a370436f1cb6eb8a4";
+var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey; 
+ // we have to capture the value of whatever the input city of the form is
+// using trim() to get rid of any white space
+var city = searchInput.val().trim();
 
+
+// making a button to contain the searches with JavaScript
+function generateBtn() {
+  if ("city") {
+    var savedBtn = $("<button>");
+    savedBtn.addClass("btn btn-outline-success");
+  if (storeBtn.length < 5) {
+   console.log(storeBtn);
+   localStorage.setItem("button", JSON.stringify(storeBtn));
+  }}
+}
 
 // Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
 $(searchBtn).on("click", function(event){
   // event.preventDefault since it's a button in a form
-    event.preventDefault();
-    todayEl.empty();
-    forecastEl.empty();
+  event.preventDefault();
+  todayEl.empty();
+  forecastEl.empty();
 
-  // we have to capture the value of whatever the input city of the form is
-// using trim() to get rid of any white space
-var city = searchInput.val().trim();
+  // call generateBtn function here
+  generateBtn(city);
+});
 
-// making a button to contain the searches with JavaScript
-if (searchInput.val()) {
-  var savedBtn = $("<button>");
-  savedBtn.addClass("btn btn-outline-success");
-if (storeBtn.length < 5) {
- console.log(storeBtn);
- localStorage.setItem("button", JSON.stringify(storeBtn));
-}}
-// searchCity(city);
+
+
+
+
+
+
+
+
+
+
 
   
-
 // Make an API call to get the city co-ords
 $.ajax({
-  url: apiUrl + city + "&limit=1&appid=" + apiKey,
-  method: "GET"
+  url: apiUrl,
+  method: "GET",
 }).then(function(response) {
   lat = response[0].lat;
   lon = response[0].lon;
@@ -47,9 +60,9 @@ $.ajax({
   // API calls for co-ords to get the present weather
   $.ajax({
     url: "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey,
-    method: "GET"
+    method: "GET",
   }).then(function(response1) {
-    getCurrentWeather(response1);
+    getCurrentWeather(response1); // I'll need to make a getCurrentWeather function later on
 
 // call for 5 days worth:
 $.ajax({
