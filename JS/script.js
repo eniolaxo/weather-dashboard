@@ -48,9 +48,8 @@ $(document).ready(function() {
       }
       displayWeather(gotArray[0]);
     }
-    savecity();  
   }
-
+  saveCity();  
 
 
   
