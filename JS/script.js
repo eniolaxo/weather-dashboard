@@ -6,7 +6,7 @@ $(document).ready(function() {
   var todayEl = $("#today");
   var forecastEl = $("#forecast");
   var apiKey = "b3383d2942e9787a370436f1cb6eb8a4";
-  var searchHistory = $("history");
+  var searchHistory = $("#history");
   $("#today").attr("style", "border:0.5px solid black; padding-left:10px")
 
   // Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
@@ -154,16 +154,5 @@ forecastEl.append(rowEl);
 // ------------------------------------------- //
 // What to do next:
 
-// 1st:
-// create a function called 'saveCity'. the point of this is to send user city inputs to localstorage and do an array of 'city' content that's been saved
-// push var city to a global cities array and then do JSON stringify to local storage.
-// within the first function make an automatic call to the save function
-// load the function 
-// json parse local storage, load local storage call at the bottom of the page.
-// now, create an if statement. also make a variable that equals the json parse
 
-// 2nd:
 // the 5 day forecast isn't showing all 5 days - so fix that.
-
-// 3rd:
-// make aesthetic changes. E.g: the buttons display at the bottom of the page rather than up, and the forecast dashboard isn't outlined with a border. 
