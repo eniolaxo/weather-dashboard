@@ -38,17 +38,21 @@ $(document).ready(function() {
     searchHistory.append(savedBtn);
   }
   
-  function saveCity(){
+  function saveCity() {
     var gotArray = JSON.parse(localStorage.getItem("button"));
     if (gotArray) {
       for (i = 0; i < gotArray.length; i++) {
         var savedCityHist = $("<button>" + gotArray[i] + "</button>");
         savedCityHist.addClass("btn btn-outline-success");
+        savedCityHist.on("click", function() {
+          displayWeather($(this).text(), apiKey);
+        });
         searchHistory.append(savedCityHist);
       }
       displayWeather(gotArray[0]);
     }
   }
+  
   saveCity();  
 
 
