@@ -155,8 +155,3 @@ forecastEl.append(rowEl);
 
 }); //closing brackets for document.ready and the main function.
 
-// ------------------------------------------- //
-// What to do next:
-
-
-// the 5 day forecast isn't showing all 5 days - so fix that.
