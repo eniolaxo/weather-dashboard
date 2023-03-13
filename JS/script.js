@@ -6,12 +6,11 @@ $(document).ready(function() {
   var todayEl = $("#today");
   var forecastEl = $("#forecast");
   var apiKey = "b3383d2942e9787a370436f1cb6eb8a4";
-  var searchHistory = $("<div>").attr("id", "search-history");
-  $("body").append(searchHistory);
+  var searchHistory = $("history");
   $("#today").attr("style", "border:0.5px solid black; padding-left:10px")
 
   // Emptying the "today" and "forecast" elements before displaying new data to ensure that the page only shows data for the most recently searched city, rather than accumulating data for all previously searched cities. 
-   $(searchBtn).on("click", function(event){
+  $(searchBtn).on("click", function(event){
     // event.preventDefault since it's a button in a form
     event.preventDefault();
     todayEl.empty();
@@ -38,6 +37,22 @@ $(document).ready(function() {
     // append the button to the search history section
     searchHistory.append(savedBtn);
   }
+  
+  function saveCity(){
+    var gotArray = JSON.parse(localStorage.getItem("button"));
+    if (gotArray) {
+      for (i = 0; i < gotArray.length; i++) {
+        var savedCityHist = $("<button>" + gotArray[i] + "</button>");
+        savedCityHist.addClass("btn btn-outline-success");
+        searchHistory.append(savedCityHist);
+      }
+      displayWeather(gotArray[0]);
+    }
+    savecity();  
+  }
+
+
+
   
    //----------------------------------------------//
   // API Calls
@@ -132,10 +147,6 @@ rowEl.append(cardEl);
 // Append the row of forecast cards to the forecast element
 forecastEl.append(rowEl);
 }
-
-// function saveCity(){
-
-// }
 
 
 
