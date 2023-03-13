@@ -44,9 +44,6 @@ $(document).ready(function() {
       for (i = 0; i < gotArray.length; i++) {
         var savedCityHist = $("<button>" + gotArray[i] + "</button>");
         savedCityHist.addClass("btn btn-outline-success");
-        // savedCityHist.on("click", function() {
-        //   displayWeather($(this).text(), apiKey);
-        // });
         searchHistory.append(savedCityHist);
       }
       displayWeather(gotArray[0]);
@@ -58,7 +55,7 @@ $(document).ready(function() {
   $(searchHistory).on("click", function(e) {
     var cityName = e.target.innerText
     todayEl.empty();
-        forecastEl.empty();
+    forecastEl.empty();
     displayWeather(cityName, apiKey);
     
     })
